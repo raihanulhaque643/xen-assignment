@@ -43,7 +43,9 @@ const SignInWithPasswordForm = ({ showSignInWithPassword, setShowSignInWithPassw
             )}
             </Formik>
 
-     {
+            <FormOrRow />
+
+            {
                 showSignInWithPassword ?
                 <button 
                 onClick={() => {setShowSignInWithPassword(false)}}
