@@ -4,6 +4,23 @@ import { Link } from 'react-router-dom';
 import FormOrRow from './FormOrRow';
 
 const SignInWithPasswordForm = ({ showSignInWithPassword, setShowSignInWithPassword }) => {
+    
+    const axios = require('axios');
+
+    const getDummyUserOnLogin = ( {phone, password} ) => {
+        axios({
+            method: 'post',
+            url: 'https://0e95fd4f-620f-4d03-9de4-336c6201a8a4.mock.pstmn.io',
+            data: {
+                phone,
+                password
+            }
+          })
+            .then((response) => {
+              console.log(response.data)
+            });
+      }
+
     return (
             <div className="">
             <Formik
@@ -19,10 +36,13 @@ const SignInWithPasswordForm = ({ showSignInWithPassword, setShowSignInWithPassw
                 return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-                }, 400);
+
+                getDummyUserOnLogin(values.phone, values.password)
+
+                // setTimeout(() => {
+                // alert(JSON.stringify(values, null, 2));
+                // setSubmitting(false);
+                // }, 400);
             }}
             >
             {({ isSubmitting }) => (
