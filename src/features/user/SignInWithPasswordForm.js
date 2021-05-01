@@ -2,24 +2,16 @@ import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link } from 'react-router-dom';
 import FormOrRow from './FormOrRow';
+import {loginAsync} from '../user/userSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import {userSelector} from '../user/userSlice'
 
 const SignInWithPasswordForm = ({ showSignInWithPassword, setShowSignInWithPassword }) => {
-    
-    const axios = require('axios');
 
-    const getDummyUserOnLogin = ( {phone, password} ) => {
-        axios({
-            method: 'post',
-            url: 'https://0e95fd4f-620f-4d03-9de4-336c6201a8a4.mock.pstmn.io',
-            data: {
-                phone,
-                password
-            }
-          })
-            .then((response) => {
-              console.log(response.data)
-            });
-      }
+    const dispatch = useDispatch()
+    const user = useSelector(userSelector);
+
+    console.log(user.status)
 
     return (
             <div className="">
@@ -36,13 +28,7 @@ const SignInWithPasswordForm = ({ showSignInWithPassword, setShowSignInWithPassw
                 return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-
-                getDummyUserOnLogin(values.phone, values.password)
-
-                // setTimeout(() => {
-                // alert(JSON.stringify(values, null, 2));
-                // setSubmitting(false);
-                // }, 400);
+                dispatch(loginAsync(values.phone, values.password))
             }}
             >
             {({ isSubmitting }) => (
@@ -55,8 +41,31 @@ const SignInWithPasswordForm = ({ showSignInWithPassword, setShowSignInWithPassw
                 <Field placeholder="Password" className="w-full border rounded p-2 my-2 bg-green-100" type="password" name="password" />
                 <ErrorMessage name="password" component="small" className="text-red-600"  />
 
+                {
+                    user.status === 'success' &&
+                    <div className="flex flex-row justify-between">
+                        <div className="flex flex-col font-bold text-green-700 m-2 justify-center">Login successful!</div>
+                        <div className="flex flex-col text-blue-600 font-bold justify-center border border-blue-600 m-2 p-2 rounded border-b-2 ">
+                            <Link to="/profile">Proceed to Profile</Link>
+                        </div>
+                    </div>
+                }
+
+                {
+                    user.status === 'failed' &&
+                    <div className="flex flex-row justify-between">
+                        <div className="flex flex-col font-bold text-red-700 m-2 justify-center">Login failed!</div>
+                    </div>
+                }
+
                 <button className="bg-black rounded text-blue-200 font-semibold text-lg p-2 my-2 border-2 border-yellow-600" type="submit" disabled={isSubmitting}>
-                    Sign in with password
+                    <div className="flex flex-row justify-center items-center">
+                    <span>Sign in with password</span>
+                    {
+                        user.status === 'loading' &&
+                        <svg className="rounded-full animate-ping duration-300 w-3 h-3 border-2 mx-2"></svg>
+                    }
+                    </div>
                 </button>
 
                 </Form>
