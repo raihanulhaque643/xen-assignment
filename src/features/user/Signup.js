@@ -40,7 +40,7 @@ const Signup = () => {
             >
             {({ isSubmitting }) => (
                 <Form className="flex flex-col">
-                <div className="font-semibold text-2xl">Create a new account</div>
+                <div className="font-bold text-2xl">Create a new account</div>
 
                 <Field className="w-full border rounded p-2 my-2 bg-green-100" type="text" name="phone" placeholder="Phone number" />
                 <ErrorMessage name="phone" component="small" className="text-red-600" />
