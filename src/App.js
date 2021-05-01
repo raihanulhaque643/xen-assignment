@@ -14,7 +14,7 @@ function App() {
   const user = useSelector(userSelector);
 
   return (
-    <div className="">
+    <div className="min-h-screen max-h-auto flex justify-center items-center bg-gray-100">
       <Router>
         <Switch>
           <Route exact component={Login} path="/" />
