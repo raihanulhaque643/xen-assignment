@@ -42,7 +42,7 @@ const SignInWithPasswordForm = ({ showSignInWithPassword, setShowSignInWithPassw
                 <ErrorMessage name="password" component="small" className="text-red-600"  />
 
                 {
-                    user.status === 'success' &&
+                    user.loggedIn &&
                     <div className="flex flex-row justify-between">
                         <div className="flex flex-col font-bold text-green-700 m-2 justify-center">Login successful!</div>
                         <div className="flex flex-col text-blue-600 font-bold justify-center border border-blue-600 m-2 p-2 rounded border-b-2 ">
@@ -52,7 +52,7 @@ const SignInWithPasswordForm = ({ showSignInWithPassword, setShowSignInWithPassw
                 }
 
                 {
-                    user.status === 'failed' &&
+                    user.loginFailed &&
                     <div className="flex flex-row justify-between">
                         <div className="flex flex-col font-bold text-red-700 m-2 justify-center">Login failed!</div>
                     </div>
